@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>Don't look closer</title>
+        <link>https://vivekkumarkamal.github.io/Do-Not-Look-Closer/appcast.xml</link>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <item>
+            <title>Version 2.1.0</title>
+            <description><![CDATA[
+                <h2>What's New in 2.1.0</h2>
+                <ul>
+                    <li>4 break types: Blink, Posture, Look Away, Walk</li>
+                    <li>Smart priority scheduling</li>
+                    <li>Pre-break warnings</li>
+                    <li>Auto-pause during meetings and screen recording</li>
+                    <li>Beautiful gradient backgrounds for breaks</li>
+                    <li>Sparkle auto-updates</li>
+                </ul>
+            ]]></description>
+            <pubDate>Mon, 24 Feb 2026 07:00:00 +0000</pubDate>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>2.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <enclosure
+                url="https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v2.1.0/Don't%20look%20closer.dmg"
+                length="4807069"
+                type="application/octet-stream"
+                sparkle:edSignature="7buVYaEx8KcIqmtTW7hjgJ8yAs3udupxfRMGlXE5o+7dScklQbtMEy3MNWipn/sAewN6ZZTY3XguhHkG7f9JBw=="
+            />
+        </item>
+    </channel>
+</rss>
