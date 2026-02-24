@@ -145,6 +145,8 @@ class TimerEngine: ObservableObject {
         let inMeeting = focusDetector.inMeeting
         overlayController.showWarning(type: type, duration: preBreakTimeRemaining, isInMeeting: inMeeting) { [weak self] in
             self?.endBreak(wasSkipped: true)
+        } onDelay: { [weak self] mins in
+            self?.delayBreak(minutes: mins)
         }
         
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
@@ -258,6 +260,26 @@ class TimerEngine: ObservableObject {
             case .walk: walkTimeRemaining = min(settings.walkIntervalSeconds, 10 * 60)
             }
         }
+    }
+
+    func delayBreak(minutes: Int) {
+        guard case .preBreak(let type) = state else { return }
+        
+        timer?.invalidate()
+        overlayController.dismissOverlay()
+        currentBreakType = nil
+        state = .running
+        
+        // Push the break back by the requested minutes
+        let delaySeconds = TimeInterval(minutes * 60)
+        switch type {
+        case .blink: blinkTimeRemaining = delaySeconds
+        case .posture: postureTimeRemaining = delaySeconds
+        case .lookAway: lookAwayTimeRemaining = delaySeconds
+        case .walk: walkTimeRemaining = delaySeconds
+        }
+        
+        startTimer()
     }
 
     func toggle() {

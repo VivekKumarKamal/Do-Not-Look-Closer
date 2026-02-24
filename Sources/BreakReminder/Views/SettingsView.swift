@@ -88,7 +88,7 @@ struct BreakSettingsTab: View {
             Section("Look Away Break (20s)") {
                 HStack {
                     Text("Every")
-                    Slider(value: $settings.lookAwayInterval, in: 20...120, step: 10)
+                    Slider(value: $settings.lookAwayInterval, in: 10...110, step: 10)
                     Text("\(Int(settings.lookAwayInterval)) min")
                         .frame(width: 55, alignment: .trailing)
                         .monospacedDigit()

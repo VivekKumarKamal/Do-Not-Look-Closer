@@ -4,11 +4,13 @@ import AppKit
 class OverlayWindowController {
     private var windows: [NSWindow] = []
     private var onSkip: (() -> Void)?
+    private var onDelay: ((Int) -> Void)?
 
     // MARK: - Pre-Break Warning
     
-    func showWarning(type: BreakType, duration: TimeInterval, isInMeeting: Bool = false, onSkip: @escaping () -> Void) {
+    func showWarning(type: BreakType, duration: TimeInterval, isInMeeting: Bool = false, onSkip: @escaping () -> Void, onDelay: @escaping (Int) -> Void) {
         self.onSkip = onSkip
+        self.onDelay = onDelay
         dismissOverlay()
 
         guard let mainScreen = NSScreen.main else { return }
@@ -18,7 +20,7 @@ class OverlayWindowController {
         let height: CGFloat = 100
         let frame = NSRect(
             x: mainScreen.frame.midX - (width / 2),
-            y: mainScreen.frame.maxY - 160, // On Top
+            y: mainScreen.frame.maxY - 140, // On Top
             width: width,
             height: height
         )
@@ -51,13 +53,17 @@ class OverlayWindowController {
         let skipAction: () -> Void = { [weak self] in
             self?.onSkip?()
         }
+        let delayAction: (Int) -> Void = { [weak self] mins in
+            self?.onDelay?(mins)
+        }
         
         let hostingView = NSHostingView(
             rootView: AnyView(
                 PreBreakWarningView(
                     type: type,
                     duration: duration,
-                    onSkip: skipAction
+                    onSkip: skipAction,
+                    onDelay: delayAction
                 )
             )
         )

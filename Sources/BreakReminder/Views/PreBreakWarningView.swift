@@ -4,30 +4,32 @@ struct PreBreakWarningView: View {
     let type: BreakType
     let duration: TimeInterval
     let onSkip: () -> Void
+    let onDelay: (Int) -> Void
     
     @State private var timeRemaining: TimeInterval
     
-    init(type: BreakType, duration: TimeInterval, onSkip: @escaping () -> Void) {
+    init(type: BreakType, duration: TimeInterval, onSkip: @escaping () -> Void, onDelay: @escaping (Int) -> Void) {
         self.type = type
         self.duration = duration
         self.onSkip = onSkip
+        self.onDelay = onDelay
         self._timeRemaining = State(initialValue: duration)
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .top) {
                 // Icon
                 ZStack {
                     Circle()
                         .fill(iconColor.opacity(0.2))
-                        .frame(width: 40, height: 40)
+                        .frame(width: 36, height: 36)
                     
                     Text(iconString)
-                        .font(.system(size: 20))
+                        .font(.system(size: 18))
                 }
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text(titleText)
                         .font(.headline)
                         .foregroundColor(.primary)
@@ -57,35 +59,40 @@ struct PreBreakWarningView: View {
                 }
             }
             
-            if type == .walk {
-                HStack(spacing: 8) {
+            // Action buttons for look away and walk
+            if type == .lookAway || type == .walk {
+                HStack(spacing: 6) {
+                    // Delay buttons
+                    ForEach([1, 2, 5], id: \.self) { mins in
+                        Button(action: { onDelay(mins) }) {
+                            Text("+\(mins)m")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(Color.secondary.opacity(0.1))
+                                .cornerRadius(6)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    
                     Spacer()
+                    
+                    // Skip
                     Button(action: onSkip) {
                         Text("Skip")
-                            .font(.system(size: 12, weight: .medium))
+                            .font(.system(size: 11, weight: .medium))
                             .foregroundColor(.secondary)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 6)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 5)
                             .background(Color.secondary.opacity(0.1))
                             .cornerRadius(6)
                     }
                     .buttonStyle(.plain)
-                    
-                    Button(action: { /* Do nothing, let timer run out to start break */ }) {
-                        Text("Ready")
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 6)
-                            .background(iconColor)
-                            .cornerRadius(6)
-                    }
-                    .buttonStyle(.plain)
                 }
-                .padding(.top, 4)
             }
         }
-        .padding(16)
+        .padding(14)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             startCountdown()

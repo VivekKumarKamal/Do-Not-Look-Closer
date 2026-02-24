@@ -35,18 +35,16 @@ struct BlinkBreakView: View {
                             endPoint: .bottomTrailing
                         )
                     )
-                    .shadow(color: Color.orange.opacity(0.4), radius: 30, y: 10)
+            )
+            .padding(8)
+            .background(
+                RoundedRectangle(cornerRadius: 38, style: .continuous)
+                    .fill(Color(white: 0.1, opacity: 0.75))
+                    .shadow(color: Color.black.opacity(0.5), radius: 30, y: 15)
             )
             .scaleEffect(scale)
             .opacity(opacity)
-            
-            Text("Blink your eyes ✨")
-                .font(.system(size: 18, weight: .medium, design: .rounded))
-                .foregroundColor(.white)
-                .padding(.top, 16)
-                .opacity(opacity)
-                .shadow(color: .black.opacity(0.5), radius: 4)
-            
+        
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
