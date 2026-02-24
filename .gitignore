@@ -1,3 +1,17 @@
-/.DS_Store
-/build.sh
-/launch.sh
+# Build artifacts
+.build/
+*.app/
+*.dmg
+
+# macOS
+.DS_Store
+*.swp
+*~
+
+# Sparkle framework (binary - download separately)
+Frameworks/
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
