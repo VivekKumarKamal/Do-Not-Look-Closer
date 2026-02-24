@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import Sparkle
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
@@ -7,6 +8,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let settings = SettingsManager()
     private var statusUpdateTimer: Timer?
     private var settingsWindow: NSWindow?
+    
+    // Sparkle auto-updater
+    private var updaterController: SPUStandardUpdaterController!
 
     // CRITICAL: Prevent app from terminating when overlay windows close
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -14,6 +18,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Initialize Sparkle auto-updater
+        updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+
         // Initialize notification manager (overlay-based, no entitlement needed)
         NotificationManager.shared.setup()
 
@@ -108,6 +115,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let testItem = NSMenuItem(title: "Test Break", action: nil, keyEquivalent: "")
         testItem.submenu = testMenu
         menu.addItem(testItem)
+
+        // Check for Updates
+        let updateItem = NSMenuItem(title: "Check for Updates…", action: #selector(SPUStandardUpdaterController.checkForUpdates(_:)), keyEquivalent: "u")
+        updateItem.target = updaterController
+        menu.addItem(updateItem)
 
         // Settings
         let settingsItem = NSMenuItem(title: "Settings…", action: #selector(openSettings), keyEquivalent: ",")

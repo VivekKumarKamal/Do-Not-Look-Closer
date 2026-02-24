@@ -10,7 +10,18 @@ let package = Package(
         .executableTarget(
             name: "BreakReminder",
             path: "Sources/BreakReminder",
-            exclude: ["Resources"]
+            exclude: ["Resources"],
+            swiftSettings: [
+                .unsafeFlags(["-F", "Frameworks"])
+            ],
+            linkerSettings: [
+                .unsafeFlags([
+                    "-F", "Frameworks",
+                    "-framework", "Sparkle",
+                    "-Xlinker", "-rpath",
+                    "-Xlinker", "@executable_path/../Frameworks"
+                ])
+            ]
         )
     ]
 )

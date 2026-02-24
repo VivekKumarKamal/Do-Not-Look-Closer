@@ -26,5 +26,9 @@
     <true/>
     <key>NSHumanReadableCopyright</key>
     <string>Copyright © 2026 Vivek Kumar. All rights reserved.</string>
+    <key>SUFeedURL</key>
+    <string>https://vivekkumarkamal.github.io/Do-Not-Look-Closer/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>0m1rmPrDrP1Vzmve4OuLh5G69D2CE3OPv9KiAVu9R+4=</string>
 </dict>
 </plist>
