@@ -1,0 +1,103 @@
+{
+  "": {
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/master.swiftdeps"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/AppDelegate.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AppDelegate.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AppDelegate.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AppDelegate~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AppDelegate.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AppDelegate.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/FocusDetector.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/FocusDetector.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/FocusDetector.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/FocusDetector~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/FocusDetector.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/FocusDetector.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/NotificationManager.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/NotificationManager.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/NotificationManager.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/NotificationManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/NotificationManager.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/NotificationManager.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/OverlayWindowController.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/OverlayWindowController.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/OverlayWindowController.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/OverlayWindowController~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/OverlayWindowController.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/OverlayWindowController.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/SettingsManager.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsManager.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsManager.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsManager.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsManager.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/TimerEngine.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/TimerEngine.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/TimerEngine.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/TimerEngine~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/TimerEngine.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/TimerEngine.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/Views/AnimationHelpers.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AnimationHelpers.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AnimationHelpers.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AnimationHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AnimationHelpers.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/AnimationHelpers.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/Views/BlinkBreakView.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/BlinkBreakView.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/BlinkBreakView.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/BlinkBreakView~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/BlinkBreakView.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/BlinkBreakView.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/Views/LookAwayBreakView.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/LookAwayBreakView.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/LookAwayBreakView.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/LookAwayBreakView~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/LookAwayBreakView.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/LookAwayBreakView.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/Views/PostureBreakView.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PostureBreakView.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PostureBreakView.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PostureBreakView~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PostureBreakView.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PostureBreakView.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/Views/PreBreakWarningView.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PreBreakWarningView.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PreBreakWarningView.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PreBreakWarningView~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PreBreakWarningView.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/PreBreakWarningView.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/Views/SettingsView.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsView.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsView.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsView.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/SettingsView.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/Views/WalkBreakView.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/WalkBreakView.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/WalkBreakView.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/WalkBreakView~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/WalkBreakView.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/WalkBreakView.dia"
+  },
+  "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/Sources/BreakReminder/main.swift": {
+    "dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/main.d",
+    "object": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/main.swift.o",
+    "swiftmodule": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/main.swiftdeps",
+    "diagnostics": "/Users/vivekkumarkamal/Projects/Coding/Break Reminder/.build/arm64-apple-macosx/debug/BreakReminder.build/main.dia"
+  }
+}
