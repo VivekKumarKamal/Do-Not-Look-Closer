@@ -104,7 +104,17 @@ struct WalkBreakView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.clear) // NSVisualEffectView handles background blur
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.1, green: 0.05, blue: 0.02).opacity(0.7),
+                    Color(red: 0.2, green: 0.12, blue: 0.05).opacity(0.5),
+                    Color(red: 0.1, green: 0.08, blue: 0.03).opacity(0.7)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         .onAppear {
             withAnimation(.easeOut(duration: 0.8)) {
                 appeared = true

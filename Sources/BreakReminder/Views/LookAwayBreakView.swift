@@ -24,19 +24,19 @@ struct LookAwayBreakView: View {
             Spacer()
 
             // Message
-            Text("Look away from the screen")
+            Text("Relax those beautiful eyes of yours")
                 .font(.system(size: 42, weight: .light, design: .rounded))
                 .foregroundColor(.white.opacity(0.95))
                 .breathing()
                 .scaleEffect(appeared ? 1.0 : 0.8)
                 .opacity(appeared ? 1.0 : 0)
 
-            Text("20-20-20 Rule: Focus on something 20 feet away")
+            Text("Focus on something at least 20 feet away")
                 .font(.system(size: 24, weight: .ultraLight, design: .rounded))
                 .foregroundColor(.white.opacity(0.7))
                 .scaleEffect(appeared ? 1.0 : 0.8)
                 .opacity(appeared ? 1.0 : 0)
-
+                
             // Countdown
             ZStack {
                 CountdownRing(
@@ -75,8 +75,17 @@ struct LookAwayBreakView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        // Background effects are handled by NSVisualEffectView in the Window Controller
-        .background(Color.clear) 
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.05, green: 0.05, blue: 0.15).opacity(0.7),
+                    Color(red: 0.1, green: 0.2, blue: 0.35).opacity(0.5),
+                    Color(red: 0.05, green: 0.1, blue: 0.2).opacity(0.7)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         .onAppear {
             withAnimation(.easeOut(duration: 0.8)) {
                 appeared = true
