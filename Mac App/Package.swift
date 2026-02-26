@@ -9,7 +9,7 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "BreakReminder",
-            path: "Sources/BreakReminder",
+            path: "BreakReminder",
             exclude: ["Resources"],
             swiftSettings: [
                 .unsafeFlags(["-F", "Frameworks"])

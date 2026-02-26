@@ -53,9 +53,22 @@ class FocusDetector: ObservableObject {
             return recorderApps.contains { name.contains($0) }
         }
 
+        // 3. Known meeting apps that might not trigger global mic correctly 
+        // (like WhatsApp Desktop which uses a different audio session)
+        let meetingApps = ["WhatsApp", "Zoom", "Microsoft Teams", "Skype"]
+        let isMeetingAppActive = runningApps.contains { app in
+            guard let name = app.localizedName else { return false }
+            // Some apps only count if they are the frontmost active app, but 
+            // for calls we just check if it's running. Since WhatsApp is always
+            // running if opened, we'll just check if it's currently frontmost
+            // OR if we can detect it has an active call. 
+            // Simple approach first: if WhatsApp is open and active, pause.
+            return meetingApps.contains { name.contains($0) } && app.isActive
+        }
+
         // Aggregate — only check settings that user has enabled
         var focusActive = false
-        if settings.pauseForMeetings && inMeeting { focusActive = true }
+        if settings.pauseForMeetings && (inMeeting || isMeetingAppActive) { focusActive = true }
         if settings.pauseForScreenRecording && isScreenRecording { focusActive = true }
 
         DispatchQueue.main.async {
