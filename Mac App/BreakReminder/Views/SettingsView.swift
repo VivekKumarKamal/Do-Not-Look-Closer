@@ -190,7 +190,7 @@ struct AboutTab: View {
                 .font(.title)
                 .fontWeight(.semibold)
 
-            Text("Version \(appVersion)")
+            Text("Version 3.0.0")
                 .foregroundColor(.secondary)
 
             Text("Take care of your eyes and body.\nBuilt with ❤️ by Vivek Kumar.")

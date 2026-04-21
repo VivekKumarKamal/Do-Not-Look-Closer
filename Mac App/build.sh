@@ -3,7 +3,7 @@ set -e
 
 APP_NAME="Don't look closer"
 BUNDLE_ID="com.vivekkumar.breakreminder"
-VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" Info.plist)
+VERSION="3.0.0"
 BUILD_DIR=".build/release"
 APP_DIR="${APP_NAME}.app"
 CONTENTS_DIR="${APP_DIR}/Contents"

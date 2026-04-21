@@ -15,9 +15,9 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.5.0</string>
+    <string>3.0.0</string>
     <key>CFBundleVersion</key>
-    <string>3</string>
+    <string>4</string>
     <key>CFBundleIconFile</key>
     <string>AppIcon</string>
     <key>LSMinimumSystemVersion</key>
@@ -29,6 +29,6 @@
     <key>SUFeedURL</key>
     <string>https://vivekkumarkamal.github.io/Do-Not-Look-Closer/appcast.xml</string>
     <key>SUPublicEDKey</key>
-    <string>LyCRHcOpVNNPiB3QwLyxgM1YIxs1aXGFMDZwkdsEXnI=</string>
+    <string>out7/YBs0OjF226jMdFFCcya6+q8LG8LUVytYH8T9w4=</string>
 </dict>
 </plist>
