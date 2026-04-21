@@ -71,10 +71,42 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupMenu() {
         let menu = NSMenu()
 
-        // Pause/Resume
-        let pauseItem = NSMenuItem(title: "Pause", action: #selector(togglePause), keyEquivalent: "p")
-        pauseItem.target = self
+        // Pause submenu
+        let pauseMenu = NSMenu()
+
+        // Resume — shown at top only when paused (tag 210)
+        let resumeItem = NSMenuItem(title: "Resume", action: #selector(togglePause), keyEquivalent: "p")
+        resumeItem.target = self
+        resumeItem.tag = 210
+        resumeItem.isHidden = true
+        pauseMenu.addItem(resumeItem)             // index 0
+
+        let resumeSep = NSMenuItem.separator()
+        resumeSep.tag = 211
+        resumeSep.isHidden = true
+        pauseMenu.addItem(resumeSep)              // index 1
+
+        let pause30 = NSMenuItem(title: "Pause for 30 Minutes", action: #selector(pauseFor30Mins), keyEquivalent: "")
+        pause30.target = self
+        pauseMenu.addItem(pause30)               // index 2
+
+        let pause1h = NSMenuItem(title: "Pause for 1 Hour", action: #selector(pauseFor1Hour), keyEquivalent: "")
+        pause1h.target = self
+        pauseMenu.addItem(pause1h)               // index 3
+
+        let pause5h = NSMenuItem(title: "Pause for 5 Hours", action: #selector(pauseFor5Hours), keyEquivalent: "")
+        pause5h.target = self
+        pauseMenu.addItem(pause5h)               // index 4
+
+        pauseMenu.addItem(NSMenuItem.separator()) // index 5
+
+        let pauseInfItem = NSMenuItem(title: "Pause ∞", action: #selector(togglePause), keyEquivalent: "")
+        pauseInfItem.target = self
+        pauseMenu.addItem(pauseInfItem)           // index 6
+
+        let pauseItem = NSMenuItem(title: "Pause", action: nil, keyEquivalent: "")
         pauseItem.tag = 200
+        pauseItem.submenu = pauseMenu
         menu.addItem(pauseItem)
 
         // Skip (only visible during break)
@@ -83,12 +115,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         skipItem.tag = 202
         skipItem.isHidden = true
         menu.addItem(skipItem)
-
-        // Enable/Disable
-        let enableItem = NSMenuItem(title: "Disable", action: #selector(toggleEnabled), keyEquivalent: "e")
-        enableItem.target = self
-        enableItem.tag = 201
-        menu.addItem(enableItem)
 
         menu.addItem(NSMenuItem.separator())
 
@@ -169,6 +195,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func updateStatusItemTitle() {
         guard let button = statusItem?.button else { return }
         let menu = statusItem?.menu
+        let settings = timerEngine.settingsRef
 
         // Always use the same eye icon — keep it simple
         button.title = " \(timerEngine.menuBarTitle)"
@@ -182,19 +209,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return m > 0 ? "\(m)m \(s)s" : "\(s)s"
             }
 
-            menu?.item(withTag: 100)?.title = "Blink in \(fmt(timerEngine.blinkTimeRemaining))"
-            menu?.item(withTag: 101)?.title = "Posture in \(fmt(timerEngine.postureTimeRemaining))"
-            menu?.item(withTag: 102)?.title = "Look away in \(fmt(timerEngine.lookAwayTimeRemaining))"
-            menu?.item(withTag: 103)?.title = "Walk in \(fmt(timerEngine.walkTimeRemaining))"
-            
+            let blinkOn    = settings?.blinkEnabled    ?? true
+            let postureOn  = settings?.postureEnabled  ?? true
+            let lookAwayOn = settings?.lookAwayEnabled ?? true
+            let walkOn     = settings?.walkEnabled     ?? true
+
+            menu?.item(withTag: 100)?.title = blinkOn    ? "Blink in \(fmt(timerEngine.blinkTimeRemaining))"       : "Blink (disabled)"
+            menu?.item(withTag: 101)?.title = postureOn  ? "Posture in \(fmt(timerEngine.postureTimeRemaining))"   : "Posture (disabled)"
+            menu?.item(withTag: 102)?.title = lookAwayOn ? "Look away in \(fmt(timerEngine.lookAwayTimeRemaining))" : "Look Away (disabled)"
+            menu?.item(withTag: 103)?.title = walkOn     ? "Walk in \(fmt(timerEngine.walkTimeRemaining))"          : "Walk (disabled)"
+
             menu?.item(withTag: 100)?.isHidden = false
             menu?.item(withTag: 101)?.isHidden = false
             menu?.item(withTag: 102)?.isHidden = false
             menu?.item(withTag: 103)?.isHidden = false
-            
+
+            // Pause submenu: hide Resume, show Pause ∞
+            let pauseSubWhenRunning = menu?.item(withTag: 200)?.submenu
+            pauseSubWhenRunning?.item(withTag: 210)?.isHidden = true   // Resume
+            pauseSubWhenRunning?.item(withTag: 211)?.isHidden = true   // separator after Resume
             menu?.item(withTag: 200)?.title = "Pause"
             menu?.item(withTag: 200)?.isHidden = false
-            menu?.item(withTag: 201)?.title = "Disable"
             menu?.item(withTag: 202)?.isHidden = true
 
             if FocusDetector.shared.isFocusModeActive {
@@ -206,12 +241,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         case .paused:
             button.image = NSImage(systemSymbolName: "pause.circle", accessibilityDescription: "Paused")
-            menu?.item(withTag: 100)?.title = "Timers paused"
+
+            let pauseSub = menu?.item(withTag: 200)?.submenu
+            // Show Resume at top of submenu
+            pauseSub?.item(withTag: 210)?.isHidden = false
+            pauseSub?.item(withTag: 211)?.isHidden = false
+
+            if let until = timerEngine.pauseUntilDate {
+                let remaining = max(0, until.timeIntervalSinceNow)
+                let mins = Int(remaining) / 60
+                let secs = Int(remaining) % 60
+                let label = mins > 0 ? "Paused — \(mins)m \(secs)s left" : "Paused — resuming…"
+                menu?.item(withTag: 100)?.title = label
+                pauseSub?.item(withTag: 210)?.title = "Resume Now"
+            } else {
+                menu?.item(withTag: 100)?.title = "Timers paused"
+                pauseSub?.item(withTag: 210)?.title = "Resume"
+            }
+            menu?.item(withTag: 200)?.title = "Resume"
+
             menu?.item(withTag: 101)?.isHidden = true
             menu?.item(withTag: 102)?.isHidden = true
             menu?.item(withTag: 103)?.isHidden = true
             menu?.item(withTag: 104)?.isHidden = true
-            menu?.item(withTag: 200)?.title = "Resume"
             menu?.item(withTag: 202)?.isHidden = true
 
         case .preBreak(let type), .onBreak(let type):
@@ -232,7 +284,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     menu?.item(withTag: 100)?.title = "Walk — \(secs)s left"
                 }
             }
-            
+
             menu?.item(withTag: 101)?.isHidden = true
             menu?.item(withTag: 102)?.isHidden = true
             menu?.item(withTag: 103)?.isHidden = true
@@ -247,7 +299,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menu?.item(withTag: 102)?.isHidden = true
             menu?.item(withTag: 103)?.isHidden = true
             menu?.item(withTag: 104)?.isHidden = true
-            menu?.item(withTag: 201)?.title = "Enable"
             menu?.item(withTag: 202)?.isHidden = true
         }
     }
@@ -256,6 +307,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func togglePause() {
         timerEngine.togglePause()
+    }
+
+    @objc private func pauseFor30Mins() {
+        timerEngine.pauseFor(minutes: 30)
+    }
+
+    @objc private func pauseFor1Hour() {
+        timerEngine.pauseFor(minutes: 60)
+    }
+
+    @objc private func pauseFor5Hours() {
+        timerEngine.pauseFor(minutes: 300)
     }
 
     @objc private func skipBreak() {
@@ -294,7 +357,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let window = NSWindow(contentViewController: hostingController)
             window.title = "Don't look closer Settings"
             window.styleMask = [.titled, .closable]
-            window.setContentSize(NSSize(width: 450, height: 340))
+            window.setContentSize(NSSize(width: 500, height: 500))
             window.center()
             window.isReleasedWhenClosed = false
             settingsWindow = window

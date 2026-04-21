@@ -17,6 +17,12 @@ class SettingsManager: ObservableObject {
     @AppStorage("lookAwayDuration") var lookAwayDuration: Double = 20
     @AppStorage("walkDuration") var walkDuration: Double = 300 // 5 minutes default
 
+    // Per-Reminder Enable/Disable
+    @AppStorage("blinkEnabled") var blinkEnabled: Bool = true
+    @AppStorage("postureEnabled") var postureEnabled: Bool = true
+    @AppStorage("lookAwayEnabled") var lookAwayEnabled: Bool = true
+    @AppStorage("walkEnabled") var walkEnabled: Bool = true
+
     // Global Settings
     @AppStorage("soundEnabled") var soundEnabled: Bool = true
     @AppStorage("isEnabled") var isEnabled: Bool = true

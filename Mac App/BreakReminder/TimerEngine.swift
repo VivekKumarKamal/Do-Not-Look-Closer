@@ -21,6 +21,9 @@ class TimerEngine: ObservableObject {
     
     @Published var state: TimerState = .disabled
     @Published var currentBreakType: BreakType? = nil
+    
+    // Timed pause support
+    var pauseUntilDate: Date? = nil
 
     private var timer: Timer?
     private var overlayController = OverlayWindowController()
@@ -43,7 +46,12 @@ class TimerEngine: ObservableObject {
     var menuBarTitle: String {
         switch state {
         case .running:
-            let nextBreak = min(blinkTimeRemaining, postureTimeRemaining, lookAwayTimeRemaining, walkTimeRemaining)
+            var candidates: [TimeInterval] = []
+            if settings.blinkEnabled    { candidates.append(blinkTimeRemaining) }
+            if settings.postureEnabled  { candidates.append(postureTimeRemaining) }
+            if settings.lookAwayEnabled { candidates.append(lookAwayTimeRemaining) }
+            if settings.walkEnabled     { candidates.append(walkTimeRemaining) }
+            let nextBreak = candidates.min() ?? 0
             let mins = Int(nextBreak) / 60
             let secs = Int(nextBreak) % 60
             if mins > 0 {
@@ -52,6 +60,11 @@ class TimerEngine: ObservableObject {
                 return "\(secs)s"
             }
         case .paused:
+            if let until = pauseUntilDate {
+                let remaining = max(0, until.timeIntervalSinceNow)
+                let mins = Int(remaining) / 60
+                return mins > 0 ? "\(mins)m" : "Paused"
+            }
             return "Paused"
         case .preBreak(_):
             return "\(Int(preBreakTimeRemaining))s"
@@ -97,32 +110,39 @@ class TimerEngine: ObservableObject {
     private func tick() {
         guard state == .running else { return }
 
-        // Decrement all running timers. If Auto-pause is active, we freeze EVERYTHING.
+        // Auto-resume if timed pause has expired
+        if case .paused = state, let until = pauseUntilDate, Date() >= until {
+            pauseUntilDate = nil
+            startTimer()
+            return
+        }
+
+        // Decrement only enabled timers. If Auto-pause is active, freeze EVERYTHING.
         if !focusDetector.isFocusModeActive {
-            blinkTimeRemaining -= 1
-            postureTimeRemaining -= 1
-            lookAwayTimeRemaining -= 1
-            walkTimeRemaining -= 1
+            if settings.blinkEnabled    { blinkTimeRemaining -= 1 }
+            if settings.postureEnabled  { postureTimeRemaining -= 1 }
+            if settings.lookAwayEnabled { lookAwayTimeRemaining -= 1 }
+            if settings.walkEnabled     { walkTimeRemaining -= 1 }
         }
 
         // Check for triggers starting from highest priority (walk) to lowest (blink)
         var triggeredBreakType: BreakType? = nil
         
-        if walkTimeRemaining <= 0 {
+        if settings.walkEnabled     && walkTimeRemaining <= 0 {
             triggeredBreakType = .walk
-        } else if lookAwayTimeRemaining <= 0 {
+        } else if settings.lookAwayEnabled && lookAwayTimeRemaining <= 0 {
             triggeredBreakType = .lookAway
-        } else if postureTimeRemaining <= 0 {
+        } else if settings.postureEnabled  && postureTimeRemaining <= 0 {
             triggeredBreakType = .posture
-        } else if blinkTimeRemaining <= 0 {
+        } else if settings.blinkEnabled    && blinkTimeRemaining <= 0 {
             triggeredBreakType = .blink
         }
 
         // Handle triggered breaks
         if let breakType = triggeredBreakType {
-            if blinkTimeRemaining <= 0 { blinkTimeRemaining = settings.blinkIntervalSeconds }
-            if postureTimeRemaining <= 0 { postureTimeRemaining = settings.postureIntervalSeconds }
-            if lookAwayTimeRemaining <= 0 { lookAwayTimeRemaining = settings.lookAwayIntervalSeconds }
+            if settings.blinkEnabled    && blinkTimeRemaining <= 0    { blinkTimeRemaining = settings.blinkIntervalSeconds }
+            if settings.postureEnabled  && postureTimeRemaining <= 0  { postureTimeRemaining = settings.postureIntervalSeconds }
+            if settings.lookAwayEnabled && lookAwayTimeRemaining <= 0 { lookAwayTimeRemaining = settings.lookAwayIntervalSeconds }
             
             if breakType == .walk || breakType == .lookAway {
                 startPreBreak(breakType)
@@ -241,11 +261,28 @@ class TimerEngine: ObservableObject {
         switch state {
         case .running:
             timer?.invalidate()
+            pauseUntilDate = nil
             state = .paused
         case .paused:
+            pauseUntilDate = nil
             startTimer()
         default:
             break
+        }
+    }
+
+    func pauseFor(minutes: Int) {
+        timer?.invalidate()
+        pauseUntilDate = Date().addingTimeInterval(TimeInterval(minutes * 60))
+        state = .paused
+        
+        // Schedule auto-resume
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self, case .paused = self.state, let until = self.pauseUntilDate else { return }
+            if Date() >= until {
+                self.pauseUntilDate = nil
+                self.startTimer()
+            }
         }
     }
 

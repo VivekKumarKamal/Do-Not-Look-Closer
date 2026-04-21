@@ -23,7 +23,7 @@ struct SettingsView: View {
                 .tabItem { Label("About", systemImage: "info.circle") }
                 .tag(3)
         }
-        .frame(width: 500, height: 420)
+        .frame(width: 500, height: 500)
     }
 }
 
@@ -65,52 +65,66 @@ struct BreakSettingsTab: View {
 
     var body: some View {
         Form {
-            Section("Blink Break (5s)") {
+            Section("👀 Blink Break (5s)") {
+                Toggle("Enable Blink Reminders", isOn: $settings.blinkEnabled)
                 HStack {
                     Text("Every")
                     Slider(value: $settings.blinkInterval, in: 5...30, step: 5)
+                        .disabled(!settings.blinkEnabled)
                     Text("\(Int(settings.blinkInterval)) min")
                         .frame(width: 55, alignment: .trailing)
                         .monospacedDigit()
                 }
+                .opacity(settings.blinkEnabled ? 1.0 : 0.4)
             }
-            
-            Section("Posture Break (5s)") {
+
+            Section("🧘 Posture Break (5s)") {
+                Toggle("Enable Posture Reminders", isOn: $settings.postureEnabled)
                 HStack {
                     Text("Every")
                     Slider(value: $settings.postureInterval, in: 15...60, step: 5)
+                        .disabled(!settings.postureEnabled)
                     Text("\(Int(settings.postureInterval)) min")
                         .frame(width: 55, alignment: .trailing)
                         .monospacedDigit()
                 }
+                .opacity(settings.postureEnabled ? 1.0 : 0.4)
             }
 
-            Section("Look Away Break (20s)") {
+            Section("🔭 Look Away Break (20s)") {
+                Toggle("Enable Look Away Reminders", isOn: $settings.lookAwayEnabled)
                 HStack {
                     Text("Every")
                     Slider(value: $settings.lookAwayInterval, in: 10...110, step: 10)
+                        .disabled(!settings.lookAwayEnabled)
                     Text("\(Int(settings.lookAwayInterval)) min")
                         .frame(width: 55, alignment: .trailing)
                         .monospacedDigit()
                 }
+                .opacity(settings.lookAwayEnabled ? 1.0 : 0.4)
             }
 
-            Section("Walk Break") {
+            Section("🚶 Walk Break") {
+                Toggle("Enable Walk Reminders", isOn: $settings.walkEnabled)
                 HStack {
                     Text("Every")
                     Slider(value: $settings.walkInterval, in: 30...240, step: 30)
+                        .disabled(!settings.walkEnabled)
                     Text("\(Int(settings.walkInterval)) min")
                         .frame(width: 55, alignment: .trailing)
                         .monospacedDigit()
                 }
+                .opacity(settings.walkEnabled ? 1.0 : 0.4)
 
                 HStack {
                     Text("Duration")
                     Slider(value: $settings.walkDuration, in: 60...600, step: 60)
+                        .disabled(!settings.walkEnabled)
                     Text("\(Int(settings.walkDuration)) sec")
                         .frame(width: 55, alignment: .trailing)
                         .monospacedDigit()
                 }
+                .opacity(settings.walkEnabled ? 1.0 : 0.4)
             }
         }
         .formStyle(.grouped)
