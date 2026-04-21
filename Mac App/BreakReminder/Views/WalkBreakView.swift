@@ -8,6 +8,8 @@ struct WalkBreakView: View {
     @State private var timeRemaining: TimeInterval
     @State private var appeared = false
     @State private var messageIndex = 0
+    @State private var countdownTimer: Timer?
+    @State private var messageTimer: Timer?
 
     private let messages = [
         "Time to stand & stretch! 🧘",
@@ -122,10 +124,15 @@ struct WalkBreakView: View {
             startCountdown()
             startMessageRotation()
         }
+        .onDisappear {
+            countdownTimer?.invalidate()
+            messageTimer?.invalidate()
+        }
     }
 
     private func startCountdown() {
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        countdownTimer?.invalidate()
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
             } else {
@@ -135,7 +142,8 @@ struct WalkBreakView: View {
     }
 
     private func startMessageRotation() {
-        Timer.scheduledTimer(withTimeInterval: 8.0, repeats: true) { _ in
+        messageTimer?.invalidate()
+        messageTimer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: true) { _ in
             withAnimation(.easeInOut(duration: 0.5)) {
                 messageIndex = (messageIndex + 1) % messages.count
             }

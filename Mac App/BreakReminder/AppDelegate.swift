@@ -1,16 +1,20 @@
 import SwiftUI
 import AppKit
+#if canImport(Sparkle)
 import Sparkle
+#endif
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     let timerEngine = TimerEngine()
-    let settings = SettingsManager()
+    let settings = SettingsManager.shared
     private var statusUpdateTimer: Timer?
     private var settingsWindow: NSWindow?
     
     // Sparkle auto-updater
+#if canImport(Sparkle)
     private var updaterController: SPUStandardUpdaterController!
+#endif
 
     // CRITICAL: Prevent app from terminating when overlay windows close
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -19,7 +23,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Initialize Sparkle auto-updater
+#if canImport(Sparkle)
         updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+#endif
 
         // Initialize notification manager (overlay-based, no entitlement needed)
         NotificationManager.shared.setup()
@@ -116,10 +122,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         testItem.submenu = testMenu
         menu.addItem(testItem)
 
+#if canImport(Sparkle)
         // Check for Updates
         let updateItem = NSMenuItem(title: "Check for Updates…", action: #selector(SPUStandardUpdaterController.checkForUpdates(_:)), keyEquivalent: "u")
         updateItem.target = updaterController
         menu.addItem(updateItem)
+#endif
 
         // Settings
         let settingsItem = NSMenuItem(title: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
@@ -294,7 +302,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let window = NSWindow(contentViewController: hostingController)
             window.title = "Don't look closer Settings"
             window.styleMask = [.titled, .closable]
-            window.setContentSize(NSSize(width: 450, height: 340))
+            window.setContentSize(NSSize(width: 500, height: 420))
             window.center()
             window.isReleasedWhenClosed = false
             settingsWindow = window

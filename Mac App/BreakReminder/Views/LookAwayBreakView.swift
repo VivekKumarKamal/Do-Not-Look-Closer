@@ -7,6 +7,7 @@ struct LookAwayBreakView: View {
 
     @State private var timeRemaining: TimeInterval
     @State private var appeared = false
+    @State private var countdownTimer: Timer?
 
     init(duration: TimeInterval, showSkip: Bool, onSkip: @escaping () -> Void) {
         self.duration = duration
@@ -92,10 +93,14 @@ struct LookAwayBreakView: View {
             }
             startCountdown()
         }
+        .onDisappear {
+            countdownTimer?.invalidate()
+        }
     }
 
     private func startCountdown() {
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        countdownTimer?.invalidate()
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
             } else {
