@@ -140,9 +140,9 @@ struct FocusModeTab: View {
         Form {
             Section(header: Text("Auto-Pause Breaks When")) {
                 Toggle(isOn: $settings.pauseForMeetings) {
-                    Label("In a Meeting or Call", systemImage: "mic.fill")
+                    Label("In a Meeting or Call", systemImage: "video.fill")
                 }
-                .help("Pauses when your microphone is actively in use")
+                .help("Pauses when your microphone or camera is actively in use")
                 
                 Toggle(isOn: $settings.pauseForScreenRecording) {
                     Label("Screen Recording", systemImage: "record.circle")
@@ -162,6 +162,10 @@ struct FocusModeTab: View {
 
 // MARK: - About Tab
 struct AboutTab: View {
+    private var appVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "2.5.0"
+    }
+
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -186,7 +190,7 @@ struct AboutTab: View {
                 .font(.title)
                 .fontWeight(.semibold)
 
-            Text("Version 2.0.0")
+            Text("Version \(appVersion)")
                 .foregroundColor(.secondary)
 
             Text("Take care of your eyes and body.\nBuilt with ❤️ by Vivek Kumar.")

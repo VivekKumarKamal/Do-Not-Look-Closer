@@ -8,7 +8,7 @@ class OverlayWindowController {
 
     // MARK: - Pre-Break Warning
     
-    func showWarning(type: BreakType, duration: TimeInterval, isInMeeting: Bool = false, onSkip: @escaping () -> Void, onDelay: @escaping (Int) -> Void) {
+    func showWarning(type: BreakType, duration: TimeInterval, showControls: Bool, isInMeeting: Bool = false, onSkip: @escaping () -> Void, onDelay: @escaping (Int) -> Void) {
         self.onSkip = onSkip
         self.onDelay = onDelay
         dismissOverlay()
@@ -17,7 +17,7 @@ class OverlayWindowController {
         
         // Create a small, floating unobtrusive window
         let width: CGFloat = 350
-        let height: CGFloat = 100
+        let height: CGFloat = showControls ? 128 : 96
         let frame = NSRect(
             x: mainScreen.frame.midX - (width / 2),
             y: mainScreen.frame.maxY - 140, // On Top
@@ -62,6 +62,7 @@ class OverlayWindowController {
                 PreBreakWarningView(
                     type: type,
                     duration: duration,
+                    showControls: showControls,
                     onSkip: skipAction,
                     onDelay: delayAction
                 )
@@ -128,6 +129,7 @@ class OverlayWindowController {
             screen: screen
         )
 
+        window.alphaValue = 0
         window.level = .screenSaver
         window.isOpaque = false
         window.backgroundColor = .clear

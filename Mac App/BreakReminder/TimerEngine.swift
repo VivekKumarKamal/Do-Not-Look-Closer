@@ -46,6 +46,9 @@ class TimerEngine: ObservableObject {
     var menuBarTitle: String {
         switch state {
         case .running:
+            if focusDetector.isFocusModeActive {
+                return "Focus"
+            }
             var candidates: [TimeInterval] = []
             if settings.blinkEnabled    { candidates.append(blinkTimeRemaining) }
             if settings.postureEnabled  { candidates.append(postureTimeRemaining) }
