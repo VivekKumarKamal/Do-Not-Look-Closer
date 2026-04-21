@@ -6,22 +6,26 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
-            <title>Version 2.5.0</title>
+            <title>Version 3.0.0</title>
             <description><![CDATA[
-                <h2>What's New in 2.5.0</h2>
+                <h2>What's New in 3.0.0</h2>
                 <ul>
-                    <li>Pre-break warnings have skip and add a few minutes delay option</li>
+                    <li>Enable or disable individual reminders (Blink, Posture, Look Away, Walk)</li>
+                    <li>Timed pause: pause for 30 minutes, 1 hour, or 5 hours with auto-resume</li>
+                    <li>Pause menu redesigned with cleaner options</li>
+                    <li>Menu bar shows "Focus" when Focus Mode is active</li>
+                    <li>Pre-break warning respects Strict Mode setting</li>
                 </ul>
             ]]></description>
-            <pubDate>Mon, 24 Feb 2026 17:00:00 +0000</pubDate>
-            <sparkle:version>2</sparkle:version>
-            <sparkle:shortVersionString>2.5.0</sparkle:shortVersionString>
+            <pubDate>Mon, 21 Apr 2026 07:30:00 +0000</pubDate>
+            <sparkle:version>4</sparkle:version>
+            <sparkle:shortVersionString>3.0.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <enclosure
-                url="https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v2.5.0/Don't%20look%20closer.dmg"
-                length="4807069"
+                url="https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v3.0.0/Don't%20look%20closer.dmg"
+                length="4782461"
                 type="application/octet-stream"
-                sparkle:edSignature="7buVYaEx8KcIqmtTW7hjgJ8yAs3udupxfRMGlXE5o+7dScklQbtMEy3MNWipn/sAewN6ZZTY3XguhHkG7f9JBw=="
+                sparkle:edSignature="NItxU3sUZwn8zYcXPM5I8uiK6zW/CVrh+Ar54bFiHimLmEeZXun8U1KYiAXtScnondutLQJT/j2U7FDNoDx0Dg=="
             />
         </item>
     </channel>

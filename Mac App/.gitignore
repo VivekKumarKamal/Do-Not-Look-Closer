@@ -14,4 +14,4 @@ Frameworks/
 # Xcode
 *.xcodeproj/
 *.xcworkspace/
-xcuserdata/
+xcuserdata/sparkle_private_key.pem
