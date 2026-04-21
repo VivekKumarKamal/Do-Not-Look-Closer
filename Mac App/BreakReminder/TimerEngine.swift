@@ -166,7 +166,7 @@ class TimerEngine: ObservableObject {
         }
         
         let inMeeting = focusDetector.inMeeting
-        overlayController.showWarning(type: type, duration: preBreakTimeRemaining, isInMeeting: inMeeting) { [weak self] in
+        overlayController.showWarning(type: type, duration: preBreakTimeRemaining, showControls: !settings.strictMode, isInMeeting: inMeeting) { [weak self] in
             self?.endBreak(wasSkipped: true)
         } onDelay: { [weak self] mins in
             self?.delayBreak(minutes: mins)
