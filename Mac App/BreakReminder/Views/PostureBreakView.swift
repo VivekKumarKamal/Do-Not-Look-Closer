@@ -7,6 +7,7 @@ struct PostureBreakView: View {
     @State private var arrowOffset: CGFloat = 60
     @State private var scale: CGFloat = 0.5
     @State private var opacity: Double = 0.0
+    @State private var countdownTimer: Timer?
     
     init(duration: TimeInterval) {
         self.duration = duration
@@ -68,10 +69,14 @@ struct PostureBreakView: View {
             
             startCountdown()
         }
+        .onDisappear {
+            countdownTimer?.invalidate()
+        }
     }
     
     private func startCountdown() {
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        countdownTimer?.invalidate()
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
                 if timeRemaining == 0 {

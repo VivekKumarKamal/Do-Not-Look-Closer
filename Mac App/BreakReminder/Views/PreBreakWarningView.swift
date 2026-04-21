@@ -3,14 +3,17 @@ import SwiftUI
 struct PreBreakWarningView: View {
     let type: BreakType
     let duration: TimeInterval
+    let showControls: Bool
     let onSkip: () -> Void
     let onDelay: (Int) -> Void
     
     @State private var timeRemaining: TimeInterval
+    @State private var countdownTimer: Timer?
     
-    init(type: BreakType, duration: TimeInterval, onSkip: @escaping () -> Void, onDelay: @escaping (Int) -> Void) {
+    init(type: BreakType, duration: TimeInterval, showControls: Bool, onSkip: @escaping () -> Void, onDelay: @escaping (Int) -> Void) {
         self.type = type
         self.duration = duration
+        self.showControls = showControls
         self.onSkip = onSkip
         self.onDelay = onDelay
         self._timeRemaining = State(initialValue: duration)
@@ -60,7 +63,7 @@ struct PreBreakWarningView: View {
             }
             
             // Action buttons for look away and walk
-            if type == .lookAway || type == .walk {
+            if showControls && (type == .lookAway || type == .walk) {
                 HStack(spacing: 6) {
                     // Delay buttons
                     ForEach([1, 2, 5], id: \.self) { mins in
@@ -97,6 +100,9 @@ struct PreBreakWarningView: View {
         .onAppear {
             startCountdown()
         }
+        .onDisappear {
+            countdownTimer?.invalidate()
+        }
     }
     
     private var iconString: String {
@@ -132,7 +138,8 @@ struct PreBreakWarningView: View {
     }
 
     private func startCountdown() {
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        countdownTimer?.invalidate()
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if timeRemaining > 0 {
                 timeRemaining -= 1
             } else {

@@ -25,13 +25,40 @@ class TimerEngine: ObservableObject {
     private var timer: Timer?
     private var overlayController = OverlayWindowController()
     private var cancellables = Set<AnyCancellable>()
+    private var settingsCancellable: AnyCancellable?
+    private var lastSettingsSnapshot: SettingsSnapshot?
     private let focusDetector = FocusDetector.shared
+
+    private struct SettingsSnapshot {
+        let isEnabled: Bool
+        let blinkInterval: Double
+        let postureInterval: Double
+        let lookAwayInterval: Double
+        let walkInterval: Double
+
+        init(_ settings: SettingsManager) {
+            isEnabled = settings.isEnabled
+            blinkInterval = settings.blinkInterval
+            postureInterval = settings.postureInterval
+            lookAwayInterval = settings.lookAwayInterval
+            walkInterval = settings.walkInterval
+        }
+
+        func hasIntervalChanges(comparedTo other: SettingsSnapshot) -> Bool {
+            blinkInterval != other.blinkInterval ||
+                postureInterval != other.postureInterval ||
+                lookAwayInterval != other.lookAwayInterval ||
+                walkInterval != other.walkInterval
+        }
+    }
 
     // Set by AppDelegate after init
     var settingsRef: SettingsManager? {
         didSet {
             guard settingsRef != nil else { return }
             resetTimers()
+            lastSettingsSnapshot = SettingsSnapshot(settings)
+            observeSettings()
             startTimer()
         }
     }
@@ -43,6 +70,10 @@ class TimerEngine: ObservableObject {
     var menuBarTitle: String {
         switch state {
         case .running:
+            if focusDetector.isFocusModeActive {
+                return "Focus"
+            }
+
             let nextBreak = min(blinkTimeRemaining, postureTimeRemaining, lookAwayTimeRemaining, walkTimeRemaining)
             let mins = Int(nextBreak) / 60
             let secs = Int(nextBreak) % 60
@@ -73,6 +104,14 @@ class TimerEngine: ObservableObject {
                 self?.snooze()
             }
             .store(in: &cancellables)
+
+        focusDetector.$isFocusModeActive
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isActive in
+                self?.focusModeDidChange(isActive: isActive)
+            }
+            .store(in: &cancellables)
     }
 
     func resetTimers() {
@@ -80,6 +119,52 @@ class TimerEngine: ObservableObject {
         postureTimeRemaining = settings.postureIntervalSeconds
         lookAwayTimeRemaining = settings.lookAwayIntervalSeconds
         walkTimeRemaining = settings.walkIntervalSeconds
+    }
+
+    private func observeSettings() {
+        settingsCancellable = settingsRef?.objectWillChange
+            .debounce(for: .milliseconds(150), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.settingsDidChange()
+            }
+    }
+
+    private func settingsDidChange() {
+        let snapshot = SettingsSnapshot(settings)
+        guard let previousSnapshot = lastSettingsSnapshot else {
+            lastSettingsSnapshot = snapshot
+            return
+        }
+        lastSettingsSnapshot = snapshot
+
+        if previousSnapshot.isEnabled != snapshot.isEnabled {
+            if snapshot.isEnabled {
+                resetTimers()
+                startTimer()
+            } else {
+                timer?.invalidate()
+                overlayController.dismissOverlay()
+                currentBreakType = nil
+                state = .disabled
+            }
+            return
+        }
+
+        guard snapshot.hasIntervalChanges(comparedTo: previousSnapshot) else {
+            return
+        }
+
+        switch state {
+        case .running, .paused:
+            resetTimers()
+            if state == .running {
+                startTimer()
+            }
+        case .disabled:
+            break
+        case .preBreak, .onBreak:
+            break
+        }
     }
 
     func startTimer() {
@@ -97,13 +182,13 @@ class TimerEngine: ObservableObject {
     private func tick() {
         guard state == .running else { return }
 
-        // Decrement all running timers. If Auto-pause is active, we freeze EVERYTHING.
-        if !focusDetector.isFocusModeActive {
-            blinkTimeRemaining -= 1
-            postureTimeRemaining -= 1
-            lookAwayTimeRemaining -= 1
-            walkTimeRemaining -= 1
-        }
+        // Auto-pause freezes countdowns and prevents already-due breaks from firing.
+        guard !focusDetector.isFocusModeActive else { return }
+
+        blinkTimeRemaining -= 1
+        postureTimeRemaining -= 1
+        lookAwayTimeRemaining -= 1
+        walkTimeRemaining -= 1
 
         // Check for triggers starting from highest priority (walk) to lowest (blink)
         var triggeredBreakType: BreakType? = nil
@@ -133,6 +218,12 @@ class TimerEngine: ObservableObject {
     }
 
     private func startPreBreak(_ type: BreakType) {
+        guard !focusDetector.isFocusModeActive else {
+            markBreakDue(type)
+            startTimer()
+            return
+        }
+
         timer?.invalidate()
         currentBreakType = type
         state = .preBreak(type)
@@ -143,7 +234,8 @@ class TimerEngine: ObservableObject {
         }
         
         let inMeeting = focusDetector.inMeeting
-        overlayController.showWarning(type: type, duration: preBreakTimeRemaining, isInMeeting: inMeeting) { [weak self] in
+        let showControls = settings.showSkipButton && !settings.strictMode
+        overlayController.showWarning(type: type, duration: preBreakTimeRemaining, showControls: showControls, isInMeeting: inMeeting) { [weak self] in
             self?.endBreak(wasSkipped: true)
         } onDelay: { [weak self] mins in
             self?.delayBreak(minutes: mins)
@@ -159,6 +251,12 @@ class TimerEngine: ObservableObject {
     }
 
     private func startBreak(_ type: BreakType) {
+        guard !focusDetector.isFocusModeActive else {
+            markBreakDue(type)
+            startTimer()
+            return
+        }
+
         timer?.invalidate()
         currentBreakType = type
         state = .onBreak(type)
@@ -233,6 +331,36 @@ class TimerEngine: ObservableObject {
         }
     }
 
+    private func markBreakDue(_ type: BreakType) {
+        switch type {
+        case .blink:
+            blinkTimeRemaining = 0
+        case .posture:
+            postureTimeRemaining = 0
+        case .lookAway:
+            lookAwayTimeRemaining = 0
+        case .walk:
+            walkTimeRemaining = 0
+        }
+    }
+
+    private func focusModeDidChange(isActive: Bool) {
+        guard isActive else { return }
+
+        switch state {
+        case .preBreak(let type), .onBreak(let type):
+            timer?.invalidate()
+            overlayController.dismissOverlay()
+            currentBreakType = nil
+            preBreakTimeRemaining = 0
+            breakTimeRemaining = 0
+            markBreakDue(type)
+            startTimer()
+        case .running, .paused, .disabled:
+            break
+        }
+    }
+
     func skipBreak() {
         endBreak(wasSkipped: true)
     }
@@ -289,6 +417,8 @@ class TimerEngine: ObservableObject {
             startTimer()
         } else {
             timer?.invalidate()
+            overlayController.dismissOverlay()
+            currentBreakType = nil
             state = .disabled
         }
     }

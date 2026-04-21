@@ -202,6 +202,7 @@ struct WalkingFigure: View {
     var size: CGFloat
     @State private var stepPhase: Bool = false
     @State private var bounce: CGFloat = 0
+    @State private var stepTimer: Timer?
 
     var body: some View {
         Image(systemName: stepPhase ? "figure.walk" : "figure.stand")
@@ -216,7 +217,8 @@ struct WalkingFigure: View {
             .offset(y: bounce)
             .onAppear {
                 // Walking step animation
-                Timer.scheduledTimer(withTimeInterval: 1.2, repeats: true) { _ in
+                stepTimer?.invalidate()
+                stepTimer = Timer.scheduledTimer(withTimeInterval: 1.2, repeats: true) { _ in
                     withAnimation(.easeInOut(duration: 0.6)) {
                         stepPhase.toggle()
                     }
@@ -225,6 +227,9 @@ struct WalkingFigure: View {
                 withAnimation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true)) {
                     bounce = -4
                 }
+            }
+            .onDisappear {
+                stepTimer?.invalidate()
             }
     }
 }
