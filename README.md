@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="Mac App/AppIcon.icns" width="100" alt="Don't look closer icon"/>
+<img src="icon.png" width="120" alt="Don't look closer icon"/>
 
 # Don't look closer
 
@@ -8,7 +8,6 @@
 
 [![macOS](https://img.shields.io/badge/macOS-14.0%2B-blue?logo=apple&logoColor=white)](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/latest)
 [![Version](https://img.shields.io/badge/version-3.0.0-brightgreen)](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/latest)
-[![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
 
 [**⬇️ Download for Mac**](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v3.0.0/Don't%20look%20closer.dmg)
 
@@ -33,12 +32,15 @@ Every reminder type is fully **configurable** and **individually toggleable** �
 
 <div align="center">
 
-| Menu Bar | Break Overlays |
-|:---:|:---:|
-| ![Menu bar dropdown showing timers and controls](screenshots/menubar.png) | ![Blink break overlay with animated eyes](screenshots/blink_break.png) |
-| *Live countdown timers for each reminder* | *Blink break with animated eyes and countdown* |
-| ![Settings window showing break intervals](screenshots/settings.png) | ![Walk break overlay with timer](screenshots/walk_break.png) |
-| *Fine-grained controls for every break type* | *Walk break with progress ring* |
+| Menu Bar | Blink Break | Posture Break |
+|:---:|:---:|:---:|
+| ![Menu bar with live timers](screenshots/Menu.png) | ![Blink reminder](screenshots/Blinking_reminder.png) | ![Posture reminder](screenshots/Posture_reminder.png) |
+| *Live countdown timers* | *Animated eye reminder* | *Sit up straight* |
+
+| Look Away Warning | Look Away Break | Walk Break |
+|:---:|:---:|:---:|
+| ![Look away pre-break warning](screenshots/Look_away_start.png) | ![Look away overlay](screenshots/Look_away_window.png) | ![Walk & stretch break](screenshots/Stretch_window.png) |
+| *Pre-break countdown* | *20/20/20 rule* | *Time to stand & stretch* |
 
 </div>
 
@@ -73,10 +75,6 @@ Breaks resume automatically when the activity ends.
 - **Sound effects** — optional audio cues
 - **Launch at login** — always running in the background
 
-### 🔄 Auto-Updates
-Built-in Sparkle auto-updater keeps the app current without any effort on your part.
-
----
 
 ## Download
 
@@ -84,7 +82,6 @@ Built-in Sparkle auto-updater keeps the app current without any effort on your p
 
 ### [⬇️ Download Don't look closer v3.0.0 (.dmg)](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v3.0.0/Don't%20look%20closer.dmg)
 
-**Requires macOS 14.0 (Sonoma) or later · Apple Silicon & Intel supported**
 
 </div>
 
@@ -95,32 +92,6 @@ Built-in Sparkle auto-updater keeps the app current without any effort on your p
 
 > **Note:** On first launch, macOS may show a security prompt. Go to **System Settings → Privacy & Security** and click "Open Anyway" to allow it.
 
----
-
-## Building from Source
-
-Requires **Xcode 15+** and **macOS 14.0+** SDK.
-
-```bash
-# Clone the repo
-git clone https://github.com/VivekKumarKamal/Do-Not-Look-Closer.git
-cd "Do-Not-Look-Closer/Mac App"
-
-# Build and run
-swift build
-# Or open in Xcode:
-open BreakReminder.xcodeproj
-```
-
----
-
-## What's New in v3.0.0
-
-- ✅ Individual enable/disable toggles per reminder type
-- ✅ Timed pause (30m / 1h / 5h) with auto-resume
-- ✅ Redesigned pause menu with cleaner options
-- ✅ Menu bar shows "Focus" when Focus Mode is active
-- ✅ Pre-break warning respects Strict Mode
 
 ---
 
@@ -134,6 +105,6 @@ The Auto-Pause feature optionally checks microphone/camera activity and running 
 
 <div align="center">
 
-Built with ❤️ by [Vivek Kumar](https://vivekverse.tech) · © 2026
+Built with ❤️ by [Vivek Kumar](https://www.linkedin.com/in/vivekkumarkamal) · © 2026
 
 </div>
