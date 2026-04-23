@@ -9,7 +9,7 @@
 [![macOS](https://img.shields.io/badge/macOS-14.0%2B-blue?logo=apple&logoColor=white)](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/latest)
 [![Version](https://img.shields.io/badge/version-3.0.0-brightgreen)](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/latest)
 
-[**⬇️ Download for Mac**](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v3.0.0/Don't%20look%20closer.dmg)
+[**⬇️ Download for Mac**](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v3.0.0/Don.t.look.closer.dmg)
 
 </div>
 
@@ -80,7 +80,7 @@ Breaks resume automatically when the activity ends.
 
 <div align="center">
 
-### [⬇️ Download Don't look closer v3.0.0 (.dmg)](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v3.0.0/Don't%20look%20closer.dmg)
+### [⬇️ Download Don't look closer v3.0.0 (.dmg)](https://github.com/VivekKumarKamal/Do-Not-Look-Closer/releases/download/v3.0.0/Don.t.look.closer.dmg)
 
 
 </div>
